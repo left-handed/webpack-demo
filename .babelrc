@@ -1,0 +1,6 @@
+{
+  "presets": [
+    "@babel/preset-env", // bable依赖
+    "@babel/preset-react" // react 依赖
+  ]
+}
