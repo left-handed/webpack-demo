@@ -1,3 +1,6 @@
 import {helloword} from './helloword.js';
+import {getText} from "../../common";
 let dom = document.getElementById('text');
-dom.innerText = helloword();
+dom.innerText = `${helloword()}${getText()}`;
+
+

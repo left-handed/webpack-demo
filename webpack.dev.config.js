@@ -16,7 +16,6 @@ const setMPA = () => {
     const match = entryFile.match(/src\/(.*)\/index\.js/);
     const pageName = match[1];
     entry[pageName] = entryFile;
-    console.log(pageName, entry)
     webpackHtmlPlugins.push(
         new HtmlWebpackPlugin({
           template: path.join(__dirname, `src/${pageName}/index.html`), // 引入的 html 模板
@@ -97,7 +96,6 @@ module.exports = {
 
   devServer: {
     static: './dist',
-    hot: true
   },
 
   optimization:{
@@ -108,5 +106,6 @@ module.exports = {
         parallel: true, // 使用多进程并发执行，提升构建速度
       }),
     ]
-  }
+  },
+  devtool: 'source-map'
 }
