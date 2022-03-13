@@ -25,7 +25,7 @@ const setMPA = () => {
             new HtmlWebpackPlugin({
                 template: path.join(__dirname, `src/${pageName}/index.html`), // 引入的 html 模板
                 filename: `${pageName}.html`, // 输出的文件名称
-                chunks: [pageName], // 对应 entry 的模块
+                chunks: ['vendors', pageName], // 对应 entry 的模块
                 inject: true, // 是否将资源注入到 body 标签底部
                 minify: {
                     html5: true,
@@ -43,7 +43,7 @@ const setMPA = () => {
 
 let {entry, webpackHtmlPlugins} = setMPA();
 module.exports = {
-    mode: 'production',
+    mode: 'none',
     // 入口
     entry: entry,
     // 输出到哪

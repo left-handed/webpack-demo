@@ -1,6 +1,15 @@
 import {helloword} from './helloword.js';
-import {getText} from "../../common";
 let dom = document.getElementById('text');
-dom.innerText = `${helloword()}${getText()}`;
+dom.innerText = `${helloword()}}`;
+
+dom.addEventListener('click', ()=> {
+    getText();
+})
+
+let getText = () => {
+    import(/* webpackChunkName: "test" */'./test.js').then((text) => {
+        console.log(text.default())
+    });
+}
 
 
