@@ -25,7 +25,8 @@ const server = (prot) => {
 server(process.env.PORT || 3000);
 
 const renderMarkup = (tabStr) => {
-    return  template.replace('<!--HTML_PLACEHOLDER-->', tabStr);
+    const strData = JSON.stringify(data);
+    return  template.replace('<!--HTML_PLACEHOLDER-->', tabStr).replace('<!--INITIAL_DATA_PLACEHOLDER-->', `<script>window.__initial_data=${strData}</script>`);
 
     // return `!<!doctype html>
     //     <html lang="en">
