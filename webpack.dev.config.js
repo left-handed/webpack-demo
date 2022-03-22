@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const glob = require('glob');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+var FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 
 // 多页面打包
 const setMPA = () => {
@@ -17,20 +18,20 @@ const setMPA = () => {
     const pageName = match[1];
     entry[pageName] = entryFile;
     webpackHtmlPlugins.push(
-        new HtmlWebpackPlugin({
-          template: path.join(__dirname, `src/${pageName}/index.html`), // 引入的 html 模板
-          filename: `${pageName}.html`, // 输出的文件名称
-          chunks: [pageName], // 对应 entry 的模块
-          inject: true, // 是否将资源注入到 body 标签底部
-          minify: {
-            html5: true,
-            collapseWhitespace: true,
-            preserveLineBreaks: false,
-            minifyCSS: true,
-            minifyJS: true,
-            removeComments: false
-          },
-        })
+      new HtmlWebpackPlugin({
+        template: path.join(__dirname, `src/${pageName}/index.html`), // 引入的 html 模板
+        filename: `${pageName}.html`, // 输出的文件名称
+        chunks: [pageName], // 对应 entry 的模块
+        inject: true, // 是否将资源注入到 body 标签底部
+        minify: {
+          html5: true,
+          collapseWhitespace: true,
+          preserveLineBreaks: false,
+          minifyCSS: true,
+          minifyJS: true,
+          removeComments: false
+        },
+      })
     )
   })
   return {entry, webpackHtmlPlugins};
@@ -91,7 +92,9 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+
+    new FriendlyErrorsWebpackPlugin(),
   ].concat(webpackHtmlPlugins),
 
   devServer: {

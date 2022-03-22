@@ -5,8 +5,8 @@ const fs = require("fs");
 const path = require("path");
 const express = require("express");
 const {renderToString} = require("react-dom/server");
-const SRR = require("../../dist/search-server.js");
-const template = fs.readFileSync(path.join(__dirname, "../../dist/search.html"), "utf-8");
+const SRR = require("../dist/search-server.js");
+const template = fs.readFileSync(path.join(__dirname, "../dist/search.html"), "utf-8");
 const data = require("./data.json");
 
 const server = (prot) => {

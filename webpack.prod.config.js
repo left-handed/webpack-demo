@@ -1,4 +1,5 @@
 'use strict'
+
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // 提取成单独的 css 文件
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin"); // 压缩 css 文件
@@ -7,8 +8,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"); // 压缩 HTML 代码
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 清除 output 输出的文件夹
 const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default; // CSS 内联到Html文件
 const glob = require('glob'); // 对页面打包插件
-const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin'); // CDN 引入不将依赖包打入bundle文件中
-
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');// CDN 引入不将依赖包打入bundle文件中
+const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
 
 // 多页面打包
 const setMPA = () => {
@@ -137,6 +138,8 @@ module.exports = {
         }),
 
         new HTMLInlineCSSWebpackPlugin(),
+
+        new FriendlyErrorsWebpackPlugin(),
     ].concat(webpackHtmlPlugins),
 
     // 优化
