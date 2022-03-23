@@ -9,7 +9,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 清除 output
 const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default; // CSS 内联到Html文件
 const glob = require('glob'); // 对页面打包插件
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');// CDN 引入不将依赖包打入bundle文件中
-const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin'); // 进行打包命令行优化
 
 // 多页面打包
 const setMPA = () => {
@@ -140,6 +140,17 @@ module.exports = {
         new HTMLInlineCSSWebpackPlugin(),
 
         new FriendlyErrorsWebpackPlugin(),
+
+        // 打包代码错误捕获
+        function() {
+            this.hooks.done.tap('done', (stats) => {
+                if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') == -1)
+                {
+                    console.log('build error');
+                    process.exit(1);
+                }
+            })
+        },
     ].concat(webpackHtmlPlugins),
 
     // 优化

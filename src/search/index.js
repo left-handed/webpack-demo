@@ -31,7 +31,6 @@ class Search extends React.Component {
 
     render () {
         let {Text} = this.state;
-        // let num = jzLargeNumber(999, 1);
         return (
           <div className="text-dom">
             <img src={fu} onClick={this.loadComponent.bind(this)} alt="fu"/>
