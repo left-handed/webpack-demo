@@ -115,7 +115,7 @@ module.exports = {
     function errorPlugin() {
       this.hooks.done.tap('done', (stats) => {
         if (stats.compilation.errors && stats.compilation.errors.length && process.argv.indexOf('--watch') === -1) {
-          console.log('build error'); // eslint-disable-line 禁用这一行，不进行校验
+          console.log('build error'); // eslint-disable-line
           process.exit(1);
         }
       });
