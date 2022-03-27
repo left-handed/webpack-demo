@@ -4,8 +4,29 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint ./lib --fix"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/eslint-parser": "^7.17.0",
+    "eslint": "^8.12.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4"
+  },
+  "dependencies": {
+    "@soda/friendly-errors-webpack-plugin": "^1.8.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-minimizer-webpack-plugin": "^3.4.1",
+    "glob": "^7.2.0",
+    "html-webpack-externals-plugin": "^3.8.0",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "terser-webpack-plugin": "^5.3.1",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-merge": "^5.8.0"
+  }
 }
