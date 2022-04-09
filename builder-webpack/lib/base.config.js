@@ -5,18 +5,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // 打包 html 文件
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin'); // 命令行信息显示优化
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 提取成单独的 css 文件
 
+const projectRoot = process.cwd(); // 当前工作目录
+
 const setMPA = () => {
-  const entry = null;
+  const entry = {};
   const webpackHtmlPlugins = [];
-  const entryFiles = glob.sync(path.join(__dirname, './src/*/index.js'));
+  const entryFiles = glob.sync(path.join(projectRoot, '/src/*/index.js'));
   Object.keys(entryFiles).map((k) => {
     const entryFile = entryFiles[k];
-    const match = entryFile.match(/src\/(.*)\/index\.js /);
-    const pageName = match[1];
+    const match = entryFile.match(/src\/(.*)\/index\.js/);
+    const pageName = match && match[1];
     entry[pageName] = entryFile;
     return webpackHtmlPlugins.push(
       new HtmlWebpackPlugin({
-        template: path.join(__dirname, `./src/${pageName}/index.html`),
+        template: path.join(projectRoot, `./src/${pageName}/index.html`),
         filename: `${pageName}.html`,
         chunks: [pageName],
         inject: true, // 是否将资源注入 body 中
@@ -58,7 +60,7 @@ module.exports = {
         use: [
           MiniCssExtractPlugin.loader,
           'css-loader',
-          'postcss-loader', // css 前缀自动补齐
+          'postcss-loader', // css 前缀自动不齐
           {
             loader: 'px2rem-loader', // px 转 rem
             options: {
@@ -76,7 +78,7 @@ module.exports = {
           'less-loader',
           'postcss-loader',
           {
-            loader: 'px2rem-loade',
+            loader: 'px2rem-loader',
             options: {
               remUni: 75,
               remPrecision: 8,
@@ -97,7 +99,7 @@ module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        use: 'flie-loader',
+        use: 'file-loader',
       },
     ],
   },

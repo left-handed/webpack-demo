@@ -8,8 +8,7 @@
     "build": "webpack --config webpack.prod.config.js",
     "watch": "webpack --watch",
     "dev": "webpack-dev-server --config webpack.dev.config.js --open",
-    "build:ssr": "webpack --config webpack.srr.js",
-    "build:stats": "webpack --config webpack.prod.config.js --json > stats.json"
+    "build:ssr": "webpack --config webpack.srr.js"
   },
   "keywords": [],
   "author": "",
