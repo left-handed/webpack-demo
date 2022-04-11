@@ -8,9 +8,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"); // 压缩 HTML 代码
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 清除 output 输出的文件夹
 const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default; // CSS 内联到Html文件
 const glob = require('glob'); // 对页面打包插件
-const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');// CDN 引入不将依赖包打入bundle文件中
+// const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');// CDN 引入不将依赖包打入bundle文件中
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin'); // 进行打包命令行优化
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const webpack = require('webpack');
 
 // 多页面打包
 const setMPA = () => {
@@ -130,20 +131,20 @@ module.exports = smp.wrap(
           new CleanWebpackPlugin(),
 
           // 将依赖包通过CND引入，不打入bundle
-          new HtmlWebpackExternalsPlugin({
-              externals: [
-                  {
-                      module: 'react',
-                      entry: 'https://unpkg.com/react@17.0.2/umd/react.production.min.js',
-                      global: 'React'
-                  },
-                  {
-                      module: 'react-dom',
-                      entry: 'https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js',
-                      global: 'ReactDOM'
-                  }
-              ]
-          }),
+          // new HtmlWebpackExternalsPlugin({
+          //     externals: [
+          //         {
+          //             module: 'react',
+          //             entry: 'https://unpkg.com/react@17.0.2/umd/react.production.min.js',
+          //             global: 'React'
+          //         },
+          //         {
+          //             module: 'react-dom',
+          //             entry: 'https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js',
+          //             global: 'ReactDOM'
+          //         }
+          //     ]
+          // }),
 
           // css文件指纹
           new MiniCssExtractPlugin({
@@ -154,6 +155,9 @@ module.exports = smp.wrap(
 
           new FriendlyErrorsWebpackPlugin(),
 
+          new webpack.DllReferencePlugin({
+              manifest: require('./build/library/library.json')
+          }),
           // 打包代码错误捕获
           function() {
               this.hooks.done.tap('done', (stats) => {
