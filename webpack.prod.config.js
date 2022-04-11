@@ -63,12 +63,19 @@ module.exports = smp.wrap(
               {
                   test: /\.js$/,
                   exclude: /(node_modules)/,
-                  use: {
-                      loader: 'babel-loader', // js文件转换
-                      options: {
-                          presets: ['@babel/preset-env'],
-                      },
-                  }
+                  use: [
+                      {
+                          loader: "thread-loader", // 每次 webpack 解析一个模块时，thread-loader 会将他及他的依赖分配给 worker 线程中
+                          options: {
+                              workers: 3
+                          }
+                      },{
+                          loader: 'babel-loader', // js文件转换
+                          options: {
+                              presets: ['@babel/preset-env'],
+                          },
+                      }
+                  ]
               },
               {
                   test: /\.css$/,
@@ -170,7 +177,7 @@ module.exports = smp.wrap(
               // JS 代码压缩
               new TerserPlugin({
                   test: /\.js$/i,
-                  parallel: true,
+                  parallel: true, // 使用多进程并发执行，提升构建速度
               }),
           ],
 
