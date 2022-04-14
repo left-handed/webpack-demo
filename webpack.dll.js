@@ -11,9 +11,9 @@ module.exports = {
     },
 
     output: {
-        filename: "[name]_[chunkhash:8].dll.js",
+        filename: "[name]_[hash:8].Dll.js",
         path: path.join(__dirname, 'build/library'), // 输出地址
-        library: "name" //
+        library: "[name]_[hash:8]"
     },
 
     plugins: [

@@ -10,7 +10,8 @@ const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").def
 const glob = require('glob'); // 对页面打包插件
 // const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');// CDN 引入不将依赖包打入bundle文件中
 const FriendlyErrorsWebpackPlugin = require('@soda/friendly-errors-webpack-plugin'); // 进行打包命令行优化
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin"); // 时间纬度监听各个依赖的打包时间
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin'); //
 const webpack = require('webpack');
 
 // 多页面打包
@@ -151,12 +152,18 @@ module.exports = smp.wrap(
               filename: 'styles/[name]_[contenthash:8].css'
           }),
 
+          ...webpackHtmlPlugins,
+
           new HTMLInlineCSSWebpackPlugin(),
 
           new FriendlyErrorsWebpackPlugin(),
 
           new webpack.DllReferencePlugin({
               manifest: require('./build/library/library.json')
+          }),
+          //
+          new AddAssetHtmlPlugin({
+              filepath: path.resolve(__dirname, 'build/library/*.dll.js')
           }),
           // 打包代码错误捕获
           function() {
@@ -168,7 +175,7 @@ module.exports = smp.wrap(
                   }
               })
           },
-      ].concat(webpackHtmlPlugins),
+      ],
 
       // 优化
       optimization:{
