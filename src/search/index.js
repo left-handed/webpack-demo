@@ -3,8 +3,9 @@
 import React from "react";
 import ReactDom from "react-dom";
 import "./styles/search.less";
-import fu from "./images/fu.jpeg"
-import {getText} from "../../common";
+import fu from "./images/fu.jpeg";
+import icon1 from "./images/icon1.png";
+import {getText} from "../../common/index";
 // import jzLargeNumber from "test-large-number-jz";
 
 class Search extends React.Component {
@@ -44,6 +45,7 @@ class Search extends React.Component {
               <div>
                 两数之和
               </div>
+              <img src={icon1} alt="小图标"/>
           </div>
         )
     }
